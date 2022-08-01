@@ -4,14 +4,16 @@
             [ring.adapter.jetty :as ring]
             [hiccup.page :as page]
             [clojure.data.json :as json]
-            [secondtry.core :as stryc]))
+            [secondtry.core :as stryc]
+            [clojure.pprint]
+            [cheshire.core :as cc]))
 
 (defn index []
   (page/html5 {:status 200}
-   [:head
-    [:title "Hello World"]]
-   [:body
-    [:div {:id "content"} "Hello World"]]))
+              [:head
+               [:title "Hello World"]]
+              [:body
+               [:div {:id "content"} "Hello World"]]))
 
 (defn nf []
   (page/html5
@@ -20,23 +22,19 @@
    [:body
     [:h1 "Page not found"]]))
 
-(defn json-response [data & [status]] 
+(defn json-response [data & [status]]
   {:status (or status 200)
    :headers {"Content-Type" "application/json"}
    :body (json/write-str data)})
 
-(defroutes routes
+(defroutes app
   (GET "/" [] (index))
-  (GET "/api/patients" [] 
+  (GET "/api/patients" []
     {:status 200
      :headers {"Content-Type" "application/json"}
      :body (stryc/get-patient-list)})
-  (POST "/api/add-patient" [fname, mname, lname, sex, bday, addr, insnum] 
-    {:status 200
-     :headers {"Content-Type" "text/plain; charset=utf-8"}
-     :body(stryc/add-patient fname mname lname sex bday addr insnum)})
+  (POST "/api/add-patient" request (stryc/add-patient (slurp (:body request))))
   (route/not-found (nf)))
 
-
 (defn -main []
-  (ring/run-jetty #'routes {:port 8081 :join? false}))
+  (ring/run-jetty #'app {:port 8081 :join? false}))
