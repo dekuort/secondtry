@@ -34,6 +34,7 @@
      :headers {"Content-Type" "application/json"}
      :body (stryc/get-patient-list)})
   (POST "/api/add-patient" request (stryc/add-patient (slurp (:body request))))
+  (POST "/api/delete-patient" request (stryc/delete-patient (slurp (:body request))))
   (route/not-found (nf)))
 
 (defn -main []

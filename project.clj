@@ -12,6 +12,9 @@
                  [compojure "1.7.0"]
                  [ring/ring-defaults "0.1.2"]
                  [hiccup "1.0.5"]
-                 [org.clojure/data.json "2.4.0"]]
+                 [org.clojure/data.json "2.4.0"]
+                 [clj-time "0.15.2"]
+                 [ring/ring-json "0.4.0"]
+                 [cheshire "5.11.0"]]
   
   :repl-options {:init-ns secondtry.core})
