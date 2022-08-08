@@ -1,8 +1,6 @@
 (ns secondtry.core
   (:require [next.jdbc :as jdbc]
             [next.jdbc.sql :as sql]
-            [clj-time.core :as t]
-            [clj-time.format :as f]
             [clj-time.coerce]
             [clojure.data.json :as json]
             [cheshire.core :as cc]))
@@ -30,6 +28,7 @@
                                  :insurance_number (json-list :insurance_number)})))
 
 (defn delete-patient [json-string]
-  (let [json-list (cc/parse-string json-string true)]
+  (let [json-list (cc/parse-string json-string 
+                                   true)]
     (sql/delete! db-spec :patient{
                                   :insurance_number (json-list :insurance_number)})))

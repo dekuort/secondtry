@@ -15,6 +15,7 @@
                  [org.clojure/data.json "2.4.0"]
                  [clj-time "0.15.2"]
                  [ring/ring-json "0.4.0"]
-                 [cheshire "5.11.0"]]
+                 [cheshire "5.11.0"]
+                 [hiccup-table "0.2.0"]]
   
   :repl-options {:init-ns secondtry.core})
